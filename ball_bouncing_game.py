@@ -53,17 +53,20 @@ while running:
             running = False
     
     keys = pygame.key.get_pressed()
-    if keys [pygame.K_LEFT] and paddle_x > 0:
+    if keys[pygame.K_LEFT] and paddle_x > 0:
         paddle_x -= paddle_speed
     if keys[pygame.K_RIGHT] and paddle_x < WIDTH - PADDLE_WIDTH:
         paddle_x += paddle_speed
         
-    ball_x = ball_speed_x
-    ball_y = ball_speed_y
+    ball_x += ball_speed_x
+    ball_y += ball_speed_y
+    
+    
     if ball_x - BALL_RADIUS <= 0 or ball_x + BALL_RADIUS >= WIDTH:
         ball_speed_x *= -1
     if ball_y - BALL_RADIUS <= 0:
         ball_speed_y *= -1
+    
     
     if (paddle_y < ball_y + BALL_RADIUS < paddle_y + PADDLE_HEIGHT and 
         paddle_x < ball_x < paddle_x + PADDLE_WIDTH and
@@ -71,9 +74,11 @@ while running:
         ball_speed_y *= -1 
         score += 1
     
+    
     if ball_y - BALL_RADIUS > HEIGHT:
         score = 0
         reset_ball()
+    
     draw()
     clock.tick(50)
     
